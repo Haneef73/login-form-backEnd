@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
     });
 
     if (findEmail) {
-        return res.sendStatus(404);
+        return res.status(404).send("Email-ID Already ragistered, Pls goto Login");
     }
 
     if (!findEmail) {
@@ -25,13 +25,14 @@ router.post("/", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     let findEmail = await userRouter.findOne({
-        Email: req.body.Email,
-        Password: req.body.Password,
+        Email: req.body.Email
     });
 
-    if (!findEmail || (!findEmail && !Password)) {
-        return res.sendStatus(404);
-    }else{
+    if (!findEmail) {
+        return res.status(404).send("Invalid Email-ID");
+    } else if (findEmail.Password != req.body.Password) {
+        return res.status(404).send("Wrong password");
+    } else {
         return res.json(findEmail);
     }
 })

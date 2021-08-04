@@ -31,16 +31,8 @@ router.post("/login", async (req, res) => {
 
     if (!findEmail || (!findEmail && !Password)) {
         return res.sendStatus(404);
-    }
-
-    if (findEmail) {
-        var data = new userRouter({
-            Name: req.body.Name,
-            Email: req.body.Email,
-            Password: req.body.Password
-        })
-
-        res.json(data);
+    }else{
+        return res.json(findEmail);
     }
 })
 
